@@ -6,7 +6,7 @@ class MangaSpider(scrapy.Spider):
     name = "manga_spider"
     index = 1
 
-    start_urls = ["https://manganato.com/genre-2/220"]
+    start_urls = ["https://manganato.com/genre-2/"]
 
     def parse(self, response):
         all_div_books = response.css("div.genres-item-info")
@@ -20,4 +20,9 @@ class MangaSpider(scrapy.Spider):
             item['chapter'] = chapter
 
             yield item 
+        next_page = f'https://manganato.com/genre-2/'+str(MangaSpider.index)+''
+
+        if MangaSpider.index <= 311:
+            MangaSpider.index += 1
+            yield response.follow(next_page, callback = self.parse)
 
