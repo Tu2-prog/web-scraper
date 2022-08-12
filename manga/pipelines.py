@@ -8,4 +8,5 @@
 
 class MangaPipeline(object):
     def process_item(self, item, spider):
+        print("Pipelines :" + item["title"])
         return item
